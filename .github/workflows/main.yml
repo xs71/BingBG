@@ -2,12 +2,12 @@
 
 name: CI
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '0 9 * * *'
+    - cron: "0 9 * * *"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -21,14 +21,16 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
       # set python env
       - name: Set up Python 3.7
         uses: actions/setup-python@v2
         with:
           python-version: 3.7
-          architecture: 'x64'
+          architecture: "x64"
       - name: install requirements
         run: pip install -r requirements.txt
+      - name: running
+        run: python main.py
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
